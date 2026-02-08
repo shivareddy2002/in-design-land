@@ -58,11 +58,13 @@ export interface SpaceItem {
   title: string;
   image: string;
   type: "Core" | "Enhanced";
+  phrase?: string;
 }
 
 export interface Collection {
   id: string;
   title: string;
+  tagline: string;
   image: string;
   coreSpaces: SpaceItem[];
   enhancedSpaces: SpaceItem[];
@@ -72,91 +74,97 @@ export const collections: Collection[] = [
   {
     id: "living-social",
     title: "Living & Social Collection",
+    tagline: "Spaces designed to connect, entertain, and relax in style.",
     image: collectionLivingSocial,
     coreSpaces: [
-      { title: "Living Room / Hall", image: livingRoom, type: "Core" },
-      { title: "Family Lounge", image: familyLounge, type: "Core" },
-      { title: "Balcony / Sit-out", image: balconySitout, type: "Core" },
+      { title: "Living Room / Hall", image: livingRoom, type: "Core", phrase: "The heart of every home" },
+      { title: "Family Lounge", image: familyLounge, type: "Core", phrase: "Where families gather" },
+      { title: "Balcony / Sit-out", image: balconySitout, type: "Core", phrase: "An open-air retreat" },
     ],
     enhancedSpaces: [
-      { title: "Home Theater", image: homeTheater, type: "Enhanced" },
-      { title: "Bar / Lounge Area", image: barLounge, type: "Enhanced" },
-      { title: "Game Room", image: gameRoom, type: "Enhanced" },
+      { title: "Home Theater", image: homeTheater, type: "Enhanced", phrase: "Cinema-grade entertainment" },
+      { title: "Bar / Lounge Area", image: barLounge, type: "Enhanced", phrase: "Sophisticated evenings at home" },
+      { title: "Game Room", image: gameRoom, type: "Enhanced", phrase: "Fun meets luxury" },
     ],
   },
   {
     id: "private-sleeping",
     title: "Private & Sleeping Collection",
+    tagline: "Personal sanctuaries crafted for comfort and privacy.",
     image: collectionPrivateSleeping,
     coreSpaces: [
-      { title: "Master Bedroom", image: masterBedroom, type: "Core" },
-      { title: "Guest Bedroom", image: guestBedroom, type: "Core" },
-      { title: "Kids Bedroom", image: kidsBedroom, type: "Core" },
+      { title: "Master Bedroom", image: masterBedroom, type: "Core", phrase: "Your personal haven" },
+      { title: "Guest Bedroom", image: guestBedroom, type: "Core", phrase: "Welcoming warmth for guests" },
+      { title: "Kids Bedroom", image: kidsBedroom, type: "Core", phrase: "Playful yet peaceful" },
     ],
     enhancedSpaces: [
-      { title: "Walk-in Closet", image: walkInCloset, type: "Enhanced" },
-      { title: "Spa Bathroom", image: spaBathroom, type: "Enhanced" },
-      { title: "Reading Nook", image: readingNook, type: "Enhanced" },
+      { title: "Walk-in Closet", image: walkInCloset, type: "Enhanced", phrase: "Organized elegance" },
+      { title: "Spa Bathroom", image: spaBathroom, type: "Enhanced", phrase: "A daily indulgence" },
+      { title: "Reading Nook", image: readingNook, type: "Enhanced", phrase: "A quiet escape" },
     ],
   },
   {
     id: "kitchen-dining",
     title: "Kitchen & Dining Collection",
+    tagline: "Functional elegance for everyday cooking and shared meals.",
     image: collectionKitchenDining,
     coreSpaces: [
-      { title: "Kitchen", image: kitchen, type: "Core" },
-      { title: "Dining Area", image: diningArea, type: "Core" },
-      { title: "Breakfast Nook", image: breakfastNook, type: "Core" },
+      { title: "Kitchen", image: kitchen, type: "Core", phrase: "Where flavors come alive" },
+      { title: "Dining Area", image: diningArea, type: "Core", phrase: "Meals made memorable" },
+      { title: "Breakfast Nook", image: breakfastNook, type: "Core", phrase: "Bright mornings start here" },
     ],
     enhancedSpaces: [
-      { title: "Walk-in Pantry", image: walkInPantry, type: "Enhanced" },
-      { title: "Wine Cellar", image: wineCellar, type: "Enhanced" },
-      { title: "Outdoor Kitchen", image: outdoorKitchen, type: "Enhanced" },
+      { title: "Walk-in Pantry", image: walkInPantry, type: "Enhanced", phrase: "Everything within reach" },
+      { title: "Wine Cellar", image: wineCellar, type: "Enhanced", phrase: "A connoisseur's corner" },
+      { title: "Outdoor Kitchen", image: outdoorKitchen, type: "Enhanced", phrase: "Al fresco culinary art" },
     ],
   },
   {
     id: "work-creative",
     title: "Work & Creative Collection",
+    tagline: "Inspiring environments for focus, creation, and innovation.",
     image: collectionWorkCreative,
     coreSpaces: [
-      { title: "Home Office", image: homeOffice, type: "Core" },
-      { title: "Study Room", image: studyRoom, type: "Core" },
-      { title: "Tech Room", image: techRoom, type: "Core" },
+      { title: "Home Office", image: homeOffice, type: "Core", phrase: "Productivity meets comfort" },
+      { title: "Study Room", image: studyRoom, type: "Core", phrase: "A space for deep focus" },
+      { title: "Tech Room", image: techRoom, type: "Core", phrase: "Built for the digital age" },
     ],
     enhancedSpaces: [
-      { title: "Art Studio", image: artStudio, type: "Enhanced" },
-      { title: "Music Room", image: musicRoom, type: "Enhanced" },
-      { title: "Workshop", image: workshop, type: "Enhanced" },
+      { title: "Art Studio", image: artStudio, type: "Enhanced", phrase: "Where creativity flows" },
+      { title: "Music Room", image: musicRoom, type: "Enhanced", phrase: "Sound meets soul" },
+      { title: "Workshop", image: workshop, type: "Enhanced", phrase: "Craft your vision" },
     ],
   },
   {
     id: "wellness-relaxation",
     title: "Wellness & Relaxation Collection",
+    tagline: "Tranquil retreats for mind, body, and soul.",
     image: collectionWellnessRelaxation,
     coreSpaces: [
-      { title: "Bathroom", image: bathroom, type: "Core" },
-      { title: "Yoga / Meditation Room", image: yogaMeditation, type: "Core" },
-      { title: "Sunroom", image: sunroom, type: "Core" },
+      { title: "Bathroom", image: bathroom, type: "Core", phrase: "Refined daily rituals" },
+      { title: "Yoga / Meditation Room", image: yogaMeditation, type: "Core", phrase: "Inner peace, by design" },
+      { title: "Sunroom", image: sunroom, type: "Core", phrase: "Bathed in natural light" },
     ],
     enhancedSpaces: [
-      { title: "Spa / Sauna", image: spaSauna, type: "Enhanced" },
-      { title: "Indoor Pool", image: indoorPool, type: "Enhanced" },
-      { title: "Indoor Garden", image: indoorGarden, type: "Enhanced" },
+      { title: "Spa / Sauna", image: spaSauna, type: "Enhanced", phrase: "Resort luxury at home" },
+      { title: "Indoor Pool", image: indoorPool, type: "Enhanced", phrase: "Serenity in motion" },
+      { title: "Indoor Garden", image: indoorGarden, type: "Enhanced", phrase: "Nature within walls" },
     ],
   },
   {
     id: "utility-special",
     title: "Utility & Special Collection",
+    tagline: "Smart, purposeful spaces for every unique need.",
     image: collectionUtilitySpecial,
     coreSpaces: [
-      { title: "Laundry Room", image: laundryRoom, type: "Core" },
-      { title: "Mudroom", image: mudroom, type: "Core" },
-      { title: "Storage Room", image: storageRoom, type: "Core" },
+      { title: "Laundry Room", image: laundryRoom, type: "Core", phrase: "Efficiency with elegance" },
+      { title: "Mudroom", image: mudroom, type: "Core", phrase: "The organized entryway" },
+      { title: "Storage Room", image: storageRoom, type: "Core", phrase: "A place for everything" },
     ],
     enhancedSpaces: [
-      { title: "Kids Playroom", image: kidsPlayroom, type: "Enhanced" },
-      { title: "Pet Room", image: petRoom, type: "Enhanced" },
-      { title: "Secret Room", image: secretRoom, type: "Enhanced" },
+      { title: "Kids Playroom", image: kidsPlayroom, type: "Enhanced", phrase: "Imagination unleashed" },
+      { title: "Pet Room", image: petRoom, type: "Enhanced", phrase: "Designed for your companions" },
+      { title: "Secret Room", image: secretRoom, type: "Enhanced", phrase: "A hidden wonder" },
     ],
   },
 ];

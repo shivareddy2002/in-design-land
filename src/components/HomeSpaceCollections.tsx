@@ -1,30 +1,33 @@
 import { useState, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { AnimatedSection } from "@/components/ui/animated-section";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { collections } from "@/data/collectionsData";
 import type { Collection } from "@/data/collectionsData";
-import CollectionDetailModal from "@/components/CollectionDetailModal";
+import CollectionDetailSection from "@/components/CollectionDetailSection";
 
+/* ─── Collection Card (Top Level) ─── */
 interface CollectionCardProps {
   collection: Collection;
   index: number;
   isVisible: boolean;
+  isActive: boolean;
   onClick: () => void;
 }
 
-const CollectionCard = ({ collection, index, isVisible, onClick }: CollectionCardProps) => (
+const CollectionCard = ({ collection, index, isVisible, isActive, onClick }: CollectionCardProps) => (
   <div
-    className="group cursor-pointer overflow-hidden rounded-xl bg-card shadow-md transition-all duration-500 ease-out"
+    className={`group cursor-pointer overflow-hidden rounded-xl bg-card shadow-md transition-all duration-500 ease-out ${
+      isActive ? "ring-2 ring-primary/40" : ""
+    }`}
     style={{
       opacity: isVisible ? 1 : 0,
-      transform: isVisible ? "translateY(0)" : "translateY(20px)",
+      transform: isVisible ? "translateY(0) scale(1)" : "translateY(20px) scale(0.97)",
       transitionDelay: `${index * 120}ms`,
     }}
     onClick={onClick}
   >
-    <div className="aspect-square overflow-hidden">
+    <div className="aspect-[4/3] overflow-hidden">
       <img
         src={collection.image}
         alt={collection.title}
@@ -32,35 +35,57 @@ const CollectionCard = ({ collection, index, isVisible, onClick }: CollectionCar
         loading="lazy"
       />
     </div>
-    <div className="p-5">
+    <div className="p-5 md:p-6">
       <h3 className="text-base font-semibold text-foreground md:text-lg">
         {collection.title}
       </h3>
+      <p className="mt-1 text-xs italic text-muted-foreground md:text-sm">
+        {collection.tagline}
+      </p>
+      <button
+        className="mt-3 inline-flex items-center gap-1 rounded-lg bg-primary/10 px-4 py-2 text-xs font-medium text-primary transition-all duration-300 hover:bg-primary/20 md:text-sm"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick();
+        }}
+      >
+        View Details
+        <ChevronRight className="h-3.5 w-3.5" />
+      </button>
     </div>
     {/* Hover shadow */}
     <div className="pointer-events-none absolute inset-0 rounded-xl transition-shadow duration-500 group-hover:shadow-[0_16px_48px_-12px_hsl(25_45%_25%/0.25)]" />
   </div>
 );
 
+/* ─── Main Section ─── */
 const HomeSpaceCollections = () => {
-  const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [activeCollectionId, setActiveCollectionId] = useState<string | null>(null);
   const isMobile = useIsMobile();
   const scrollRef = useRef<HTMLDivElement>(null);
   const { ref: sectionRef, isVisible: headerVisible } = useScrollAnimation();
   const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation({ rootMargin: "0px 0px -30px 0px" });
 
+  const activeCollection = activeCollectionId
+    ? collections.find((c) => c.id === activeCollectionId) ?? null
+    : null;
+
   const handleCollectionClick = useCallback((collection: Collection) => {
-    setSelectedCollection(collection);
-    setModalOpen(true);
+    setActiveCollectionId((prev) =>
+      prev === collection.id ? null : collection.id
+    );
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setActiveCollectionId(null);
   }, []);
 
   const scroll = useCallback((direction: "left" | "right") => {
     if (!scrollRef.current) return;
     const cardWidth = scrollRef.current.firstElementChild?.getBoundingClientRect().width || 350;
     const gap = 24;
-    const scrollAmount = direction === "left" ? -(cardWidth + gap) : cardWidth + gap;
-    scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    const amount = direction === "left" ? -(cardWidth + gap) : cardWidth + gap;
+    scrollRef.current.scrollBy({ left: amount, behavior: "smooth" });
   }, []);
 
   return (
@@ -81,6 +106,15 @@ const HomeSpaceCollections = () => {
           </h2>
           <p className="mx-auto max-w-2xl text-base text-muted-foreground md:text-lg">
             Modular living spaces designed for comfort, productivity, and lifestyle
+          </p>
+          <p
+            className="mx-auto mt-3 max-w-xl text-sm italic text-muted-foreground/80 transition-all duration-700 ease-out md:text-base"
+            style={{
+              opacity: headerVisible ? 1 : 0,
+              transitionDelay: "400ms",
+            }}
+          >
+            "Curated interior spaces crafted for modern living and elevated lifestyles."
           </p>
         </div>
 
@@ -118,6 +152,7 @@ const HomeSpaceCollections = () => {
                   collection={collection}
                   index={idx}
                   isVisible={cardsVisible}
+                  isActive={activeCollectionId === collection.id}
                   onClick={() => handleCollectionClick(collection)}
                 />
               </div>
@@ -135,12 +170,13 @@ const HomeSpaceCollections = () => {
         </div>
       </div>
 
-      {/* Collection Detail Modal */}
-      <CollectionDetailModal
-        collection={selectedCollection}
-        open={modalOpen}
-        onOpenChange={setModalOpen}
-      />
+      {/* Full-Page Inline Detail Section */}
+      {activeCollection && (
+        <CollectionDetailSection
+          collection={activeCollection}
+          onClose={handleClose}
+        />
+      )}
     </section>
   );
 };
