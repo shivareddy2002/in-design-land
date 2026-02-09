@@ -1,25 +1,22 @@
-import { useState, useRef, useCallback } from "react";
+import { useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { collections } from "@/data/collectionsData";
 import type { Collection } from "@/data/collectionsData";
-import CollectionDetailSection from "@/components/CollectionDetailSection";
 
 /* ─── Collection Card (Top Level) ─── */
 interface CollectionCardProps {
   collection: Collection;
   index: number;
   isVisible: boolean;
-  isActive: boolean;
   onClick: () => void;
 }
 
-const CollectionCard = ({ collection, index, isVisible, isActive, onClick }: CollectionCardProps) => (
+const CollectionCard = ({ collection, index, isVisible, onClick }: CollectionCardProps) => (
   <div
-    className={`group cursor-pointer overflow-hidden rounded-xl bg-card shadow-md transition-all duration-500 ease-out ${
-      isActive ? "ring-2 ring-primary/40" : ""
-    }`}
+    className={`group cursor-pointer overflow-hidden rounded-xl bg-card shadow-md transition-all duration-500 ease-out`}
     style={{
       opacity: isVisible ? 1 : 0,
       transform: isVisible ? "translateY(0) scale(1)" : "translateY(20px) scale(0.97)",
@@ -60,25 +57,15 @@ const CollectionCard = ({ collection, index, isVisible, isActive, onClick }: Col
 
 /* ─── Main Section ─── */
 const HomeSpaceCollections = () => {
-  const [activeCollectionId, setActiveCollectionId] = useState<string | null>(null);
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const scrollRef = useRef<HTMLDivElement>(null);
   const { ref: sectionRef, isVisible: headerVisible } = useScrollAnimation();
   const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation({ rootMargin: "0px 0px -30px 0px" });
 
-  const activeCollection = activeCollectionId
-    ? collections.find((c) => c.id === activeCollectionId) ?? null
-    : null;
-
   const handleCollectionClick = useCallback((collection: Collection) => {
-    setActiveCollectionId((prev) =>
-      prev === collection.id ? null : collection.id
-    );
-  }, []);
-
-  const handleClose = useCallback(() => {
-    setActiveCollectionId(null);
-  }, []);
+    navigate(`/collections/${collection.id}`);
+  }, [navigate]);
 
   const scroll = useCallback((direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -152,7 +139,6 @@ const HomeSpaceCollections = () => {
                   collection={collection}
                   index={idx}
                   isVisible={cardsVisible}
-                  isActive={activeCollectionId === collection.id}
                   onClick={() => handleCollectionClick(collection)}
                 />
               </div>
@@ -169,14 +155,6 @@ const HomeSpaceCollections = () => {
           </button>
         </div>
       </div>
-
-      {/* Full-Page Inline Detail Section */}
-      {activeCollection && (
-        <CollectionDetailSection
-          collection={activeCollection}
-          onClose={handleClose}
-        />
-      )}
     </section>
   );
 };
