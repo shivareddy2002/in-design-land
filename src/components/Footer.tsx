@@ -34,7 +34,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-primary text-primary-foreground py-6" ref={footerRef as React.RefObject<HTMLElement>}>
+    <footer className="bg-primary text-primary-foreground py-12" ref={footerRef as React.RefObject<HTMLElement>}>
       <div className="container mx-auto px-4 lg:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
@@ -56,7 +56,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className={cn(
-            "transition-all duration-700 px-20 ease-out",
+            "transition-all duration-700 ease-out",
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           )} style={{ transitionDelay: "100ms" }}>
             <h3 className="font-bold text-lg mb-3">Quick Links</h3>

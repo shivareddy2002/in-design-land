@@ -13,7 +13,7 @@ const FindUs = () => {
   ];
 
   return (
-    <section id="find-us" className="py-8 bg-background" ref={sectionRef as React.RefObject<HTMLElement>}>
+    <section id="find-us" className="py-20 bg-background" ref={sectionRef as React.RefObject<HTMLElement>}>
       <div className="container mx-auto px-4 lg:px-6">
         {/* Header */}
         <div className={cn(
@@ -31,7 +31,7 @@ const FindUs = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
           {/* Location Info */}
           <div className={cn(
             "h-full transition-all duration-700 ease-out",
